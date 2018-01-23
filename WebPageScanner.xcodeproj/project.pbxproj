@@ -13,6 +13,12 @@
 		3712A5062017706D0015A94D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3712A5052017706D0015A94D /* Assets.xcassets */; };
 		3712A5092017706D0015A94D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3712A5072017706D0015A94D /* LaunchScreen.storyboard */; };
 		3712A50C2017706D0015A94D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A50B2017706D0015A94D /* main.m */; };
+		3712A516201777130015A94D /* SearchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A515201777130015A94D /* SearchObject.m */; };
+		3712A51A201792010015A94D /* SearchEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A519201792010015A94D /* SearchEngine.m */; };
+		3712A51D2017921A0015A94D /* URLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A51C2017921A0015A94D /* URLLoader.m */; };
+		3712A520201792290015A94D /* Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A51F201792290015A94D /* Parser.m */; };
+		3712A5232017A1660015A94D /* URLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A5222017A1660015A94D /* URLSession.m */; };
+		3712A5272017AB010015A94D /* URLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A5262017AB010015A94D /* URLResponse.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +32,18 @@
 		3712A5082017706D0015A94D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3712A50A2017706D0015A94D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3712A50B2017706D0015A94D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3712A514201777130015A94D /* SearchObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchObject.h; sourceTree = "<group>"; };
+		3712A515201777130015A94D /* SearchObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchObject.m; sourceTree = "<group>"; };
+		3712A518201792010015A94D /* SearchEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchEngine.h; sourceTree = "<group>"; };
+		3712A519201792010015A94D /* SearchEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEngine.m; sourceTree = "<group>"; };
+		3712A51B2017921A0015A94D /* URLLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLLoader.h; sourceTree = "<group>"; };
+		3712A51C2017921A0015A94D /* URLLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLLoader.m; sourceTree = "<group>"; };
+		3712A51E201792290015A94D /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		3712A51F201792290015A94D /* Parser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Parser.m; sourceTree = "<group>"; };
+		3712A5212017A1660015A94D /* URLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLSession.h; sourceTree = "<group>"; };
+		3712A5222017A1660015A94D /* URLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLSession.m; sourceTree = "<group>"; };
+		3712A5252017AB010015A94D /* URLResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLResponse.h; sourceTree = "<group>"; };
+		3712A5262017AB010015A94D /* URLResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLResponse.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,15 +78,51 @@
 			children = (
 				3712A4FC2017706D0015A94D /* AppDelegate.h */,
 				3712A4FD2017706D0015A94D /* AppDelegate.m */,
-				3712A4FF2017706D0015A94D /* ViewController.h */,
-				3712A5002017706D0015A94D /* ViewController.m */,
-				3712A5022017706D0015A94D /* Main.storyboard */,
+				3712A517201791D50015A94D /* Views */,
+				3712A513201776D90015A94D /* Entities */,
+				3712A518201792010015A94D /* SearchEngine.h */,
+				3712A519201792010015A94D /* SearchEngine.m */,
+				3712A5242017A16D0015A94D /* Networking */,
+				3712A51E201792290015A94D /* Parser.h */,
+				3712A51F201792290015A94D /* Parser.m */,
 				3712A5052017706D0015A94D /* Assets.xcassets */,
+				3712A5022017706D0015A94D /* Main.storyboard */,
 				3712A5072017706D0015A94D /* LaunchScreen.storyboard */,
 				3712A50A2017706D0015A94D /* Info.plist */,
 				3712A50B2017706D0015A94D /* main.m */,
 			);
 			path = WebPageScanner;
+			sourceTree = "<group>";
+		};
+		3712A513201776D90015A94D /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				3712A514201777130015A94D /* SearchObject.h */,
+				3712A515201777130015A94D /* SearchObject.m */,
+				3712A5252017AB010015A94D /* URLResponse.h */,
+				3712A5262017AB010015A94D /* URLResponse.m */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		3712A517201791D50015A94D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3712A4FF2017706D0015A94D /* ViewController.h */,
+				3712A5002017706D0015A94D /* ViewController.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3712A5242017A16D0015A94D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				3712A51B2017921A0015A94D /* URLLoader.h */,
+				3712A51C2017921A0015A94D /* URLLoader.m */,
+				3712A5212017A1660015A94D /* URLSession.h */,
+				3712A5222017A1660015A94D /* URLSession.m */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +198,12 @@
 			files = (
 				3712A5012017706D0015A94D /* ViewController.m in Sources */,
 				3712A50C2017706D0015A94D /* main.m in Sources */,
+				3712A516201777130015A94D /* SearchObject.m in Sources */,
+				3712A51A201792010015A94D /* SearchEngine.m in Sources */,
+				3712A51D2017921A0015A94D /* URLLoader.m in Sources */,
+				3712A5272017AB010015A94D /* URLResponse.m in Sources */,
+				3712A520201792290015A94D /* Parser.m in Sources */,
+				3712A5232017A1660015A94D /* URLSession.m in Sources */,
 				3712A4FE2017706D0015A94D /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
