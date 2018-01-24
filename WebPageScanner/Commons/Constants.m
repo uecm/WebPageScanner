@@ -15,4 +15,9 @@ NSString *const kURLPredicate = @"https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]\
 
 NSString *const kURLAbsoluteStringMatchPredicate = @"SELF.absoluteString == %@";
 
+
+
+// View Controller Identifiers
+NSString *const kViewControllerIdentifier = @"ViewControllerIdentifier";
+
 @end

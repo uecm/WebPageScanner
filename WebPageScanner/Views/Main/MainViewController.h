@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MainEventHandler;
 
-@interface ViewController : UIViewController
+@interface MainViewController : UITableViewController
 
+@property (strong, nonatomic) MainEventHandler *eventHandler;
 
 @end
 

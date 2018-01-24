@@ -13,12 +13,12 @@
 
 @interface ServiceFactory : NSObject
 
-+ (URLLoader *) initializeURLLoader;
-+ (URLLoader *) initializeURLLoaderWithConcurrentLimit:(NSInteger)limit;
+- (URLLoader *) initializeURLLoader;
+- (URLLoader *) initializeURLLoaderWithConcurrentLimit:(NSInteger)limit;
 
-+ (SearchService *) initializeSearchService;
-+ (SearchService *) initializeSearchServiceWithURLLoader:(URLLoader *)loader;
+- (SearchService *) initializeSearchService;
+- (SearchService *) initializeSearchServiceWithURLLoader:(URLLoader *)loader;
 
-+ (Parser *) initializeParser;
+- (Parser *) initializeParser;
 
 @end

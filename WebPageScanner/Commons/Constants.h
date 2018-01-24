@@ -13,4 +13,8 @@
 extern NSString *const kURLPredicate;
 extern NSString *const kURLAbsoluteStringMatchPredicate;
 
+
+// Controller identifiers
+extern NSString *const kViewControllerIdentifier;
+
 @end

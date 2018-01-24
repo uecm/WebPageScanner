@@ -14,30 +14,30 @@
 @implementation ServiceFactory
 
 #pragma mark URL Loader
-+ (URLLoader *)initializeURLLoader {
+- (URLLoader *)initializeURLLoader {
     return [[URLLoader alloc] init];
 }
 
-+ (URLLoader *)initializeURLLoaderWithConcurrentLimit:(NSInteger)limit {
-    URLLoader *loader = [ServiceFactory initializeURLLoader];
+- (URLLoader *)initializeURLLoaderWithConcurrentLimit:(NSInteger)limit {
+    URLLoader *loader = [self initializeURLLoader];
     loader.maximumConcurrentDownloads = limit;
     return loader;
 }
 
 
 #pragma mark Search Service
-+ (SearchService *) initializeSearchService {
+- (SearchService *) initializeSearchService {
     return [[SearchService alloc] init];
 }
 
-+ (SearchService *)initializeSearchServiceWithURLLoader:(URLLoader *)loader {
-    Parser *parser = [ServiceFactory initializeParser];
+- (SearchService *)initializeSearchServiceWithURLLoader:(URLLoader *)loader {
+    Parser *parser = [self initializeParser];
     return [[SearchService alloc] initWithLoader:loader parser:parser];
 }
 
 
 #pragma mark Parser
-+ (Parser *)initializeParser {
+- (Parser *)initializeParser {
     return [[Parser alloc] init];
 }
 

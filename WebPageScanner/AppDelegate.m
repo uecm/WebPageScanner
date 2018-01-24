@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "FlowController.h"
+@class MainViewController;
 
 @interface AppDelegate ()
+
+@property (strong, nonatomic) FlowController *flowController;
 
 @end
 
@@ -17,9 +21,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.flowController = [[FlowController alloc] init];
+
+    UINavigationController *navigationController = [self.flowController initializeRootNavigationController];
+    MainViewController *root = [self.flowController initializeMainViewController];
+    navigationController.viewControllers = @[root];
+    
+    application.keyWindow.rootViewController = navigationController;
+    
     return YES;
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

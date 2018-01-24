@@ -9,10 +9,12 @@
 #import "URLLoader.h"
 #import "URLSession.h"
 #import "URLResponse.h"
+#import "LimitedConcurrentQueue.h"
 
 @interface URLLoader()
 
 @property (strong, nonatomic) URLSession *session;
+@property (strong, nonatomic) LimitedConcurrentQueue *requestQueue;
 
 @end
 
@@ -36,24 +38,29 @@
     return _session;
 }
 
+- (LimitedConcurrentQueue *)requestQueue {
+    if (_requestQueue == nil) {
+        _requestQueue = [[LimitedConcurrentQueue alloc] initWithLimit:self.maximumConcurrentDownloads];
+    }
+    return _requestQueue;
+}
+
 
 - (void)loadURL:(NSURL *)URL withCompletion:(void (^)(URLResponse *, NSError *))completion {
-    [[self.session dataTaskWithURL:URL
-                 completionHandler:^(NSData * _Nullable data,
-                                     NSURLResponse * _Nullable response,
-                                     NSError * _Nullable error) {
-                     URLResponse *urlResponse;
-                     if (error != nil) {
-                         urlResponse = [[URLResponse alloc] initWithSourceURL:URL
-                                                                     contents:error.localizedDescription];
-                     } else {
-                         NSString *html = [[NSString alloc] initWithData:data
-                                                                encoding:NSUTF8StringEncoding];
-                         urlResponse = [[URLResponse alloc] initWithSourceURL:URL
-                                                                     contents:html];
-                     }
-                     completion(urlResponse, error);
-                 }] resume];
+
+    TaskBlock task = ^(TaskCompletionBlock loaderCompletion) {
+        [[self.session dataTaskWithURL:URL
+                     completionHandler:^(NSData * _Nullable data,
+                                         NSURLResponse * _Nullable response,
+                                         NSError * _Nullable error) {
+                         loaderCompletion(true);
+                         URLResponse *urlResponse = [self URLResponseWithResponse:response
+                                                                             data:data
+                                                                            error:error];
+                         completion(urlResponse, error);
+                     }] resume];
+    };
+    [self.requestQueue enqueueTask:task];
 }
 
 - (void)pauseLoading {
@@ -67,6 +74,25 @@
 - (void)stopLoading {
     [self.session invalidateAndCancel];
     self.session = nil;
+}
+
+
+#pragma mark Private
+
+- (URLResponse *)URLResponseWithResponse:(NSURLResponse *)response
+                                    data:(NSData *)data
+                                   error:(NSError *)error {
+    URLResponse *urlResponse;
+    if (error != nil) {
+        urlResponse = [[URLResponse alloc] initWithSourceURL:response.URL
+                                                    contents:error.localizedDescription];
+    } else {
+        NSString *html = [[NSString alloc] initWithData:data
+                                               encoding:NSUTF8StringEncoding];
+        urlResponse = [[URLResponse alloc] initWithSourceURL:response.URL
+                                                    contents:html];
+    }
+    return urlResponse;
 }
 
 
