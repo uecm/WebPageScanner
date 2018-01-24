@@ -16,7 +16,6 @@
 }
 
 
-
 + (NSURLSessionConfiguration *)configurationWithLimit:(NSInteger)limit {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPMaximumConnectionsPerHost = limit;

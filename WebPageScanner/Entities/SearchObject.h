@@ -10,18 +10,23 @@
 
 typedef NS_ENUM(NSInteger, SearchObjectStatus) {
     SearchObjectStatusPending,
-    SearchObjectStatusSearching,
+    SearchObjectStatusLoading,
     SearchObjectStatusSuccess,
-    SearchObjectStatusTimeout,
-    SearchObjectStatusFailure
+    SearchObjectStatusNetworkError,
+    SearchObjectStatusSuspended,
+    SearchObjectStatusCancelled
 };
 
 
 @interface SearchObject : NSObject
 
+@property (assign, nonatomic) NSInteger depthLevel;
+
 @property (strong, nonatomic, readonly) NSURL *URL;
-@property (assign, nonatomic) NSInteger wordMatches;
+@property (assign, nonatomic) NSInteger textMatches;
+
 @property (assign, nonatomic) SearchObjectStatus status;
+@property (strong, nonatomic) NSString *statusDescription;
 
 - (instancetype)initWithURL:(NSURL *)URL;
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;

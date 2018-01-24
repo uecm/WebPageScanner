@@ -42,15 +42,17 @@
                  completionHandler:^(NSData * _Nullable data,
                                      NSURLResponse * _Nullable response,
                                      NSError * _Nullable error) {
+                     URLResponse *urlResponse;
                      if (error != nil) {
-                         completion(nil, error);
+                         urlResponse = [[URLResponse alloc] initWithSourceURL:URL
+                                                                     contents:error.localizedDescription];
                      } else {
                          NSString *html = [[NSString alloc] initWithData:data
                                                                 encoding:NSUTF8StringEncoding];
-                         URLResponse *response = [[URLResponse alloc] initWithSourceURL:URL
-                                                                               contents:html];
-                         completion(response, nil);
+                         urlResponse = [[URLResponse alloc] initWithSourceURL:URL
+                                                                     contents:html];
                      }
+                     completion(urlResponse, error);
                  }] resume];
 }
 

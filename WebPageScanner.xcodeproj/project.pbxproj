@@ -14,11 +14,14 @@
 		3712A5092017706D0015A94D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3712A5072017706D0015A94D /* LaunchScreen.storyboard */; };
 		3712A50C2017706D0015A94D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A50B2017706D0015A94D /* main.m */; };
 		3712A516201777130015A94D /* SearchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A515201777130015A94D /* SearchObject.m */; };
-		3712A51A201792010015A94D /* SearchEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A519201792010015A94D /* SearchEngine.m */; };
+		3712A51A201792010015A94D /* SearchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A519201792010015A94D /* SearchService.m */; };
 		3712A51D2017921A0015A94D /* URLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A51C2017921A0015A94D /* URLLoader.m */; };
 		3712A520201792290015A94D /* Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A51F201792290015A94D /* Parser.m */; };
 		3712A5232017A1660015A94D /* URLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A5222017A1660015A94D /* URLSession.m */; };
 		3712A5272017AB010015A94D /* URLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A5262017AB010015A94D /* URLResponse.m */; };
+		74E826A12017CA9E008AF62B /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A02017CA9E008AF62B /* SearchResult.m */; };
+		74E826A52017CCCF008AF62B /* ServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A42017CCCF008AF62B /* ServiceFactory.m */; };
+		74E826A92017DAF8008AF62B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A82017DAF8008AF62B /* Constants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +37,8 @@
 		3712A50B2017706D0015A94D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3712A514201777130015A94D /* SearchObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchObject.h; sourceTree = "<group>"; };
 		3712A515201777130015A94D /* SearchObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchObject.m; sourceTree = "<group>"; };
-		3712A518201792010015A94D /* SearchEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchEngine.h; sourceTree = "<group>"; };
-		3712A519201792010015A94D /* SearchEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchEngine.m; sourceTree = "<group>"; };
+		3712A518201792010015A94D /* SearchService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchService.h; sourceTree = "<group>"; };
+		3712A519201792010015A94D /* SearchService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchService.m; sourceTree = "<group>"; };
 		3712A51B2017921A0015A94D /* URLLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLLoader.h; sourceTree = "<group>"; };
 		3712A51C2017921A0015A94D /* URLLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLLoader.m; sourceTree = "<group>"; };
 		3712A51E201792290015A94D /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
@@ -44,6 +47,12 @@
 		3712A5222017A1660015A94D /* URLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLSession.m; sourceTree = "<group>"; };
 		3712A5252017AB010015A94D /* URLResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLResponse.h; sourceTree = "<group>"; };
 		3712A5262017AB010015A94D /* URLResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLResponse.m; sourceTree = "<group>"; };
+		74E8269F2017CA9E008AF62B /* SearchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
+		74E826A02017CA9E008AF62B /* SearchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		74E826A32017CCCF008AF62B /* ServiceFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceFactory.h; sourceTree = "<group>"; };
+		74E826A42017CCCF008AF62B /* ServiceFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceFactory.m; sourceTree = "<group>"; };
+		74E826A72017DAF8008AF62B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		74E826A82017DAF8008AF62B /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,11 +89,8 @@
 				3712A4FD2017706D0015A94D /* AppDelegate.m */,
 				3712A517201791D50015A94D /* Views */,
 				3712A513201776D90015A94D /* Entities */,
-				3712A518201792010015A94D /* SearchEngine.h */,
-				3712A519201792010015A94D /* SearchEngine.m */,
-				3712A5242017A16D0015A94D /* Networking */,
-				3712A51E201792290015A94D /* Parser.h */,
-				3712A51F201792290015A94D /* Parser.m */,
+				74E8269E2017C950008AF62B /* Services */,
+				74E826AA2017DB03008AF62B /* Commons */,
 				3712A5052017706D0015A94D /* Assets.xcassets */,
 				3712A5022017706D0015A94D /* Main.storyboard */,
 				3712A5072017706D0015A94D /* LaunchScreen.storyboard */,
@@ -99,6 +105,8 @@
 			children = (
 				3712A514201777130015A94D /* SearchObject.h */,
 				3712A515201777130015A94D /* SearchObject.m */,
+				74E8269F2017CA9E008AF62B /* SearchResult.h */,
+				74E826A02017CA9E008AF62B /* SearchResult.m */,
 				3712A5252017AB010015A94D /* URLResponse.h */,
 				3712A5262017AB010015A94D /* URLResponse.m */,
 			);
@@ -123,6 +131,45 @@
 				3712A5222017A1660015A94D /* URLSession.m */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		74E8269E2017C950008AF62B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				74E826A32017CCCF008AF62B /* ServiceFactory.h */,
+				74E826A42017CCCF008AF62B /* ServiceFactory.m */,
+				74E826AB2017DC54008AF62B /* Search */,
+				3712A5242017A16D0015A94D /* Networking */,
+				74E826A62017DA5B008AF62B /* Parsing */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		74E826A62017DA5B008AF62B /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				3712A51E201792290015A94D /* Parser.h */,
+				3712A51F201792290015A94D /* Parser.m */,
+			);
+			path = Parsing;
+			sourceTree = "<group>";
+		};
+		74E826AA2017DB03008AF62B /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				74E826A72017DAF8008AF62B /* Constants.h */,
+				74E826A82017DAF8008AF62B /* Constants.m */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		74E826AB2017DC54008AF62B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				3712A518201792010015A94D /* SearchService.h */,
+				3712A519201792010015A94D /* SearchService.m */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,15 +243,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74E826A12017CA9E008AF62B /* SearchResult.m in Sources */,
+				74E826A52017CCCF008AF62B /* ServiceFactory.m in Sources */,
 				3712A5012017706D0015A94D /* ViewController.m in Sources */,
 				3712A50C2017706D0015A94D /* main.m in Sources */,
 				3712A516201777130015A94D /* SearchObject.m in Sources */,
-				3712A51A201792010015A94D /* SearchEngine.m in Sources */,
+				3712A51A201792010015A94D /* SearchService.m in Sources */,
 				3712A51D2017921A0015A94D /* URLLoader.m in Sources */,
 				3712A5272017AB010015A94D /* URLResponse.m in Sources */,
 				3712A520201792290015A94D /* Parser.m in Sources */,
 				3712A5232017A1660015A94D /* URLSession.m in Sources */,
 				3712A4FE2017706D0015A94D /* AppDelegate.m in Sources */,
+				74E826A92017DAF8008AF62B /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
