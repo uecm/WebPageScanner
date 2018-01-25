@@ -21,7 +21,11 @@
 - (instancetype)initWithURL:(NSURL *)URL {
     self = [super init];
     if (self) {
-        self.privateURL = URL;
+        if ([URL.absoluteString hasPrefix:@"http://"] || [URL.absoluteString hasPrefix:@"https://"]) {
+            self.privateURL = URL;
+        } else {
+            self.privateURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", URL.absoluteString]];
+        }
     }
     return self;
 }

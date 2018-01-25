@@ -25,7 +25,7 @@
 {
     self = [super init];
     if (self) {
-        self.maximumConcurrentDownloads = 5; // Default value if not set
+        self.maximumConcurrentDownloads = 1000; // Default value if not set
     }
     return self;
 }
@@ -47,7 +47,7 @@
 
 
 - (void)loadURL:(NSURL *)URL withCompletion:(void (^)(URLResponse *, NSError *))completion {
-
+    
     TaskBlock task = ^(TaskCompletionBlock loaderCompletion) {
         [[self.session dataTaskWithURL:URL
                      completionHandler:^(NSData * _Nullable data,
@@ -64,6 +64,7 @@
 }
 
 - (void)pauseLoading {
+    [self.requestQueue suspend];
     [self.session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
         for (NSURLSessionTask *task in tasks) {
             [task suspend];
@@ -72,6 +73,8 @@
 }
 
 - (void)stopLoading {
+    [self.requestQueue suspend];
+    self.requestQueue = nil;
     [self.session invalidateAndCancel];
     self.session = nil;
 }

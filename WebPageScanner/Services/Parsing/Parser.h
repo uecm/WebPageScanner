@@ -11,8 +11,8 @@
 @interface Parser : NSObject
 
 - (NSInteger)numberOfMatchesForText:(NSString *)text inContentsOfPage:(NSString *)page;
-
 - (NSArray<NSString *> *)linksInContentsOfPage:(NSString *)page;
 
+- (BOOL)stringMatchesURLPattern:(NSString *)string;
 
 @end

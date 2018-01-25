@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, TextFieldTableViewCellType) {
+    TextFieldTableViewCellTypeURL,
+    TextFieldTableViewCellTypeSearchText,
+    TextFieldTableViewCellTypeThread,
+    TextFieldTableViewCellTypePage
+};
+
+
+typedef void(^TextFieldReturnHandler)(NSString *text);
+
 @interface TextFieldTableViewCell : UITableViewCell
+
+@property (strong, nonatomic) TextFieldReturnHandler returnHandler;
+
+@property (weak, nonatomic) TextFieldTableViewCell *nextCell;
+
 
 @end

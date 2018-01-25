@@ -22,12 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.flowController = [[FlowController alloc] init];
-
-    UINavigationController *navigationController = [self.flowController initializeRootNavigationController];
-    MainViewController *root = [self.flowController initializeMainViewController];
-    navigationController.viewControllers = @[root];
     
-    application.keyWindow.rootViewController = navigationController;
+    self.window.rootViewController = [self.flowController initializeAppEntryPoint];
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

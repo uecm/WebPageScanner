@@ -10,14 +10,54 @@
 
 @implementation Constants
 
-NSString *const kURLPredicate = @"https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]\
-                            {2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
+//Numbers
+NSInteger const kThreadLimit = 50;
+NSInteger const kPageLimit = 400;
 
+// Predicates
+NSString *const kURLPredicate = @"https?://(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)";
 NSString *const kURLAbsoluteStringMatchPredicate = @"SELF.absoluteString == %@";
 
 
 
-// View Controller Identifiers
-NSString *const kViewControllerIdentifier = @"ViewControllerIdentifier";
+// Storyboard Identifiers
+NSString *const kRootNavigationControllerIdentifier = @"RootNavigationController";
+NSString *const kMainViewControllerIdentifier = @"ViewControllerIdentifier";
+NSString *const kSearchViewControllerIdentifier = @"SearchViewControllerIdentifier";
+
+NSString *const kSearchCellIdentifier = @"SearchCellIdentifier";
+
+// Alerts
+NSString *const kAlertOkButton = @"Ok";
+
+// Alert Titles
+NSString *const kIncorrectURLAlertTitle = @"Incorrect URL";
+NSString *const kEmptySearchTextAlertTitle = @"Search Text";
+
+NSString *const kTooManyThreadsAlertTitle = @"Thread Number";
+NSString *const kZeroThreadsAlertTitle = @"Zero Threads";
+
+NSString *const kTooManyPagesAlertTitle = @"Page Number";
+NSString *const kZeroPagesAlertTitle = @"Zero Pages";
+
+
+// Alert Messages
+NSString *const kIncorrectURLAlertMessage = @"Please check if entered URL is valid and try again";
+NSString *const kEmptySearchTextAlertMessage = @"Search text field can not be left empty";
+
+NSString *const kTooManyThreadsAlertMessage = @"Thread number is too big, maximum available is 50";
+NSString *const kZeroThreadsAlertMessage = @"Thread number can not be equal to zero";
+
+NSString *const kTooManyPagesAlertMessage = @"Page number is too big, maximum available is 400";
+NSString *const kZeroPagesAlertMessage = @"Page number can not be equal to zero";
+
+
+// View State
+NSString *const kViewStateIdle = @"Idle";
+NSString *const kViewStateLoading = @"Loading";
+NSString *const kViewStatePaused = @"Paused";
+
+
+
 
 @end

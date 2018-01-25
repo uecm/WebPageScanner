@@ -43,5 +43,15 @@
     });
 }
 
+- (void)suspend {
+    dispatch_suspend(self.concurrentQueue);
+    dispatch_suspend(self.serialQueue);
+}
+
+- (void)resume {
+    dispatch_resume(self.concurrentQueue);
+    dispatch_resume(self.serialQueue);
+}
+
 
 @end

@@ -14,6 +14,10 @@
 #import "MainViewController.h"
 #import "MainEventHandler.h"
 
+#import "SearchViewController.h"
+#import "SearchEventHandler.h"
+#import "SearchConfiguration.h"
+
 @interface FlowController()
 
 @property (strong, nonatomic) ServiceFactory *serviceFactory;
@@ -30,21 +34,50 @@
     return self;
 }
 
-- (UINavigationController *)initializeRootNavigationController {
-    return (UINavigationController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]
-                                      instantiateInitialViewController];
+- (UIStoryboard *)mainStoryboard {
+    return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 }
 
+- (UINavigationController *)initializeRootNavigationController {
+    return (UINavigationController *)[[self mainStoryboard]
+               instantiateViewControllerWithIdentifier:kRootNavigationControllerIdentifier];
+}
+
+
+- (__kindof UIViewController *)initializeAppEntryPoint {
+    UINavigationController *navigationController = [self initializeRootNavigationController];
+    MainViewController *rootController = [self initializeMainViewController];
+    navigationController.viewControllers = @[rootController];
+    return navigationController;
+}
+
+
+// View Wireframes
+
 - (MainViewController *)initializeMainViewController {
-    MainViewController *controller = (MainViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]
-                                                            instantiateViewControllerWithIdentifier:kViewControllerIdentifier];
+    MainViewController *controller = (MainViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:kMainViewControllerIdentifier];
     MainEventHandler *eventHandler = [[MainEventHandler alloc] init];
 
-    URLLoader *loader = [self.serviceFactory initializeURLLoader];
-    eventHandler.searchService = [self.serviceFactory initializeSearchServiceWithURLLoader:loader];
-
+    Parser *parser = [self.serviceFactory initializeParser];
+    eventHandler.parser = parser;
+    eventHandler.view = controller;
+    eventHandler.flowController = self;
+    
     controller.eventHandler = eventHandler;
     return controller;
 }
+
+- (SearchViewController *)initializeSearchViewControllerWithConfiguration:(SearchConfiguration *)configuration {
+    SearchViewController *searchController = [[self mainStoryboard] instantiateViewControllerWithIdentifier:kSearchViewControllerIdentifier];
+    SearchEventHandler *eventHandler = [[SearchEventHandler alloc] initWithConfiguration:configuration];
+    
+    URLLoader *loader = [self.serviceFactory initializeURLLoaderWithConcurrentLimit:configuration.threadNumber];
+    eventHandler.searchService = [self.serviceFactory initializeSearchServiceWithURLLoader:loader];
+    eventHandler.view = searchController;
+    
+    searchController.eventHandler = eventHandler;
+    return searchController;
+}
+
 
 @end

@@ -18,21 +18,36 @@
 }
 
 - (NSArray<NSString *> *)linksInContentsOfPage:(NSString *)page {
+    if (!page) {
+        return nil;
+    }
     NSMutableArray<NSString *> *links = [[NSMutableArray alloc] init];
+    NSError *error = nil;
+    NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink
+                                                                   error:&error];
     
-    NSArray<NSTextCheckingResult *> *matches = [self matchesInString:page
-                                                          forPattern:kURLPredicate];
+    NSArray<NSTextCheckingResult *> *matches = [linkDetector matchesInString:page
+                                                                     options:0
+                                                                       range:NSMakeRange(0, page.length)];
     for (NSTextCheckingResult *result in matches) {
         NSString *link = [page substringWithRange:result.range];
         [links addObject:link];
     }
-    
     return [links copy];
+}
+
+- (BOOL)stringMatchesURLPattern:(NSString *)string {
+    if (!string) {
+        return false;
+    }
+    NSError *error = nil;
+    NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+    return [linkDetector matchesInString:string options:0 range:NSMakeRange(0, string.length)].count > 0;
 }
 
 
 
-#pragma mark Private
+#pragma mark - Private
 
 - (NSArray<NSTextCheckingResult *> *)matchesInString:(NSString *)string forPattern:(NSString *)pattern {
     NSError *error = nil;

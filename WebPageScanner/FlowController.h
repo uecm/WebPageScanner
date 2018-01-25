@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 @class MainViewController;
+@class SearchViewController;
+@class SearchConfiguration;
+
 
 @interface FlowController : NSObject
 
 - (MainViewController *)initializeMainViewController;
-- (UINavigationController *)initializeRootNavigationController;
+- (SearchViewController *)initializeSearchViewControllerWithConfiguration:(SearchConfiguration *)configuration;
+- (__kindof UIViewController *)initializeAppEntryPoint;
 
 @end

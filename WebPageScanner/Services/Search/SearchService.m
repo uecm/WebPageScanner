@@ -71,11 +71,37 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 }
 
 - (void)pauseSearch {
+    [self.loader pauseLoading];
     
+    for (SearchObject *object in self.queue) {
+        if (object.status == SearchObjectStatusLoading ||
+            object.status == SearchObjectStatusPending) {
+            object.status = SearchObjectStatusSuspended;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate searchService:self didUpdateStatusOfSearchObject:object];
+            });
+        }
+    }
 }
 
 - (void)stopSearch {
+    [self.loader stopLoading];
+    self.queue = @[].mutableCopy;
+    self.usedURLs = @[].mutableCopy;
     
+    for (SearchObject *object in self.queue) {
+        if (object.status == SearchObjectStatusLoading ||
+            object.status == SearchObjectStatusPending ||
+            object.status == SearchObjectStatusSuspended) {
+            object.status = SearchObjectStatusCancelled;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate searchService:self didUpdateStatusOfSearchObject:object];
+            });
+        }
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate searchServiceDidStopSearching:self];
+    });
 }
 
 
@@ -94,7 +120,9 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
                 break;
             case SearchServiceFinishReasonReachedMaxAmount:
                 if ([self.delegate respondsToSelector:@selector(searchService:didFinishSearchingWithResult:)]) {
-                    [self.delegate searchService:self didFinishSearchingWithResult:self.searchResult];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.delegate searchService:self didFinishSearchingWithResult:self.searchResult];
+                    });
                 }
                 break;
             default:
@@ -109,7 +137,9 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 
     if (self.queue.count == 0) {
         if ([self.delegate respondsToSelector:@selector(searchService:didFinishSearchingWithResult:)]) {
-            [self.delegate searchService:self didFinishSearchingWithResult:self.searchResult];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate searchService:self didFinishSearchingWithResult:self.searchResult];
+            });
         }
         return;
     }
@@ -132,16 +162,25 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 - (void)loadURLOfSearchObject:(SearchObject *)searchObject
                withCompletion:(void (^)(BOOL success))completion {
 
+    if (self.usedURLs.count == self.maximumURLCount) {
+        return;
+    }
+    
     [self.usedURLs addObject:searchObject.URL];
-
     searchObject.status = SearchObjectStatusLoading;
 
+    if ([self.delegate respondsToSelector:@selector(searchService:didUpdateStatusOfSearchObject:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate searchService:self didUpdateStatusOfSearchObject:searchObject];
+        });
+    }
+    
     __unsafe_unretained typeof(self) weakSelf = self;
     [self.loader loadURL:searchObject.URL withCompletion:^(URLResponse *response, NSError *error) {
         if (error != nil) {
             searchObject.status = SearchObjectStatusNetworkError;
             searchObject.statusDescription = response.contents;
-            
+            self.searchResult.totalErrors += 1;
         } else {
             searchObject.status = SearchObjectStatusSuccess;
             if (weakSelf != nil) {
@@ -150,6 +189,13 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
                              forSearchObject:searchObject];
             }
         }
+        
+        if ([self.delegate respondsToSelector:@selector(searchService:didUpdateStatusOfSearchObject:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate searchService:self didUpdateStatusOfSearchObject:searchObject];
+            });
+        }
+        
         completion(false);
     }];
 
@@ -167,16 +213,26 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
             withSearchText:(NSString *)text
            forSearchObject:(SearchObject *)searchObject {
     
+    if (!htmlString) {
+        return;
+    }
     NSInteger numberOfMatches = [self.parser numberOfMatchesForText:text
                                                    inContentsOfPage:htmlString];
     NSArray<NSString *> *links = [self.parser linksInContentsOfPage:htmlString];
+    
+    searchObject.textMatches = numberOfMatches;
+    if ([self.delegate respondsToSelector:@selector(searchService:didUpdateNumberOfMatches:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate searchService:self didUpdateNumberOfMatches:numberOfMatches];
+        });
+    }
+    
     
     self.searchResult.totalTextMatches += numberOfMatches;
     
     NSArray<SearchObject *> *searchObjects = [self searchObjectsForLinks:links
                                                               withParent:searchObject];
     [self.nextLevelQueue addObjectsFromArray:searchObjects];
-    
 }
 
 
@@ -190,6 +246,7 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
         BOOL isUsed = [self.usedURLs filteredArrayUsingPredicate:predicate].count > 0;
         if (!isUsed) {
             SearchObject *object = [[SearchObject alloc] initWithURL:URL];
+            object.status = SearchObjectStatusPending;
             object.depthLevel = parentObject.depthLevel + 1;
             [searchObjects addObject:object];
         }

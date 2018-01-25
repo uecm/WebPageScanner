@@ -9,10 +9,21 @@
 #import <UIKit/UIKit.h>
 @class MainEventHandler;
 
-@interface MainViewController : UITableViewController
+@protocol MainViewControllerEventHandling;
 
-@property (strong, nonatomic) MainEventHandler *eventHandler;
+@protocol MainViewControllerViewing <NSObject>
+@required
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
+- (void)showViewController:(__kindof UIViewController *)controller;
 
 @end
+
+@interface MainViewController : UITableViewController <MainViewControllerViewing>
+
+@property (strong, nonatomic) id<MainViewControllerEventHandling> eventHandler;
+
+
+@end
+
 
 

@@ -17,5 +17,7 @@ typedef void(^TaskBlock)(TaskCompletionBlock completionBlock);
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 - (void)enqueueTask:(TaskBlock)task;
+- (void)suspend;
+- (void)resume;
 
 @end
