@@ -43,8 +43,12 @@
 
 - (void)invalidateQueues {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-        [self.operationQueue cancelAllOperations];
+        if (self.operationQueue) {
+            [self.operationQueue cancelAllOperations];
+        }
+        if (self.semaphore) {
+            dispatch_semaphore_wait(self.semaphore, 0);
+        }
     });
 }
 

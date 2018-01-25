@@ -11,10 +11,18 @@
 @protocol ProgressViewEventHandling;
 
 
+typedef NS_ENUM(NSInteger, ItemUpdateActionType) {
+    ItemUpdateActionTypeReload,
+    ItemUpdateActionTypeAdd
+};
+
+
 @protocol ProgressViewControllerViewing <NSObject>
 
-- (void)updateViewWithDataSource:(NSArray<SearchObject *> *)dataSource;
-- (void)updateViewWithSearchObject:(SearchObject *)searchObject;
+- (void)updateItemAtIndex:(NSInteger)index
+           withActionType:(ItemUpdateActionType)actionType;
+- (void)configureTableView;
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
 

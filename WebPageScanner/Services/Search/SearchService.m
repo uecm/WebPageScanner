@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 @property (strong, nonatomic) NSMutableArray<SearchObject *> *nextLevelQueue;
 @property (strong, nonatomic) NSMutableArray<SearchObject *> *usedObjects;
 
-@property (strong, nonatomic) NSMutableArray<NSURL *> *usedURLs;
+@property (strong, atomic) NSMutableArray<NSURL *> *usedURLs;
 
 @property (strong, nonatomic) SearchResult *searchResult;
 
@@ -84,7 +84,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
     self.searchResult.startURL = URL;
     
     SearchObject *searchObject = [[SearchObject alloc] initWithURL:URL];
-    searchObject.depthLevel = 0;
     self.queue = @[searchObject];
 
     [self loadCurrentQueueObjects];
@@ -153,11 +152,13 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
                 [self loadCurrentQueueObjects];
                 break;
             case SearchServiceFinishReasonReachedMaxAmount:
+                [self.loader stopLoading];
                 for (id delegate in delegates) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [delegate searchService:self didFinishSearchingWithResult:self.searchResult];
                     });
                 }
+                
                 break;
             default:
                 break;
@@ -179,6 +180,9 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
     }
 
     for (SearchObject *object in self.queue) {
+        if (self.usedURLs.count == self.maximumURLCount) {
+            return;
+        }
         [self loadURLOfSearchObject:object withCompletion:^(BOOL shouldStopLoading) {
             if (shouldStopLoading) {
                 completion(SearchServiceFinishReasonReachedMaxAmount);
@@ -194,25 +198,24 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 
 
 - (void)loadURLOfSearchObject:(SearchObject *)searchObject
-               withCompletion:(void (^)(BOOL success))completion {
-    if (self.usedURLs.count == self.maximumURLCount) {
-        return;
-    }
+               withCompletion:(void (^)(BOOL shouldStopLoading))completion {
+    
     searchObject.status = SearchObjectStatusLoading;
     for (id delegate in delegates) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [delegate searchService:self didUpdateStatusOfSearchObject:searchObject];
         });
     }
+    
     __unsafe_unretained typeof(self) weakSelf = self;
     [self.loader loadURL:searchObject.URL withCompletion:^(URLResponse *response, NSError *error) {
         [self.usedURLs addObject:searchObject.URL];
-        if ((self.usedURLs.count > self.maximumURLCount) || paused) {
+        if (self.usedURLs.count > self.maximumURLCount) {
             return;
         }
         if (error != nil) {
             searchObject.status = SearchObjectStatusNetworkError;
-            searchObject.statusDescription = response.contents;
+            searchObject.info = response.contents;
 
             self.searchResult.totalErrors += 1;
         } else {
@@ -223,17 +226,17 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
                              forSearchObject:searchObject];
             }
         }
-        for (id delegate in delegates) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.usedObjects addObject:searchObject];
-                [delegate searchService:self didUpdateStatusOfSearchObject:searchObject];
-            });
+        
+        if (!paused) {
+            for (id delegate in delegates) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.usedObjects addObject:searchObject];
+                    [delegate searchService:self didUpdateStatusOfSearchObject:searchObject];
+                });
+            }
         }
-        if (self.usedURLs.count == self.maximumURLCount) {
-            completion(true);
-        } else {
-            completion(false);
-        }
+        BOOL shouldStop = self.usedURLs.count == self.maximumURLCount;
+        completion(shouldStop);
     }];
     if (self.usedURLs.count == self.maximumURLCount) {
         completion(true);
@@ -275,7 +278,9 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 - (NSArray<SearchObject *> *)searchObjectsForLinks:(NSArray<NSString *> *)links
                                         withParent:(SearchObject *)parentObject {
     NSMutableArray<SearchObject *> *searchObjects = [[NSMutableArray alloc] init];
-    for (NSString *link in links) {
+    NSSet<NSString *> *linkSet = [NSSet setWithArray:links];
+    
+    for (NSString *link in linkSet) {
         NSURL *URL = [NSURL URLWithString:link];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:kURLAbsoluteStringMatchPredicate,
                                     URL.absoluteString];
@@ -283,7 +288,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
         if (!isUsed) {
             SearchObject *object = [[SearchObject alloc] initWithURL:URL];
             object.status = SearchObjectStatusPending;
-            object.depthLevel = parentObject.depthLevel + 1;
             [searchObjects addObject:object];
         }
     }

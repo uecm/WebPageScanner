@@ -9,8 +9,13 @@
 #import "ProgressEventHandler.h"
 #import "ProgressViewController.h"
 #import "SearchService.h"
+#import "SearchObject.h"
+#import "Constants.h"
+
 
 @interface ProgressEventHandler() <SearchServiceDelegate>
+
+@property (strong, nonatomic) NSMutableArray<SearchObject *> *data;
 
 @end
 
@@ -29,7 +34,13 @@
 }
 
 - (void)searchService:(SearchService *)service didUpdateStatusOfSearchObject:(SearchObject *)object {
-    [self.view updateViewWithSearchObject:object];
+    ItemUpdateActionType actionType = ItemUpdateActionTypeReload;
+    if (![self.data containsObject:object]) {
+        [self.data addObject:object];
+        actionType = ItemUpdateActionTypeAdd;
+    }
+    NSInteger index = [self.data indexOfObject:object];
+    [self.view updateItemAtIndex:index withActionType:actionType];
 }
 
 - (void)searchServiceDidForceStopSearching:(SearchService *)service {
@@ -40,10 +51,35 @@
 #pragma mark - ProgressViewEventHandling
 
 - (void)configureView {
-
-    NSArray *initialDataSource = [self.searchService usedSearchObjects];
-    [self.view updateViewWithDataSource:initialDataSource];
+    self.data = [NSMutableArray arrayWithArray:[self.searchService usedSearchObjects]];
+    [self.view configureTableView];
     [self.searchService addDelegate:self];
 }
+
+- (NSArray<SearchObject *> *)dataSource {
+    return [self.data copy];
+}
+
+- (void)showDetailForItemAtIndex:(NSInteger)index {
+    SearchObject *object = [self.data objectAtIndex:index];
+    if (object) {
+        NSString *title = object.statusDescription;
+        NSString *message;
+        switch (object.status) {
+            case SearchObjectStatusSuccess:
+                message = [NSString stringWithFormat:kSuccessSearchObjectMessage,
+                            object.textMatches];
+                break;
+            case SearchObjectStatusNetworkError:
+                message = object.info;
+            default:
+                break;
+        }
+        [self.view showAlertWithTitle:title message:message];
+    }
+}
+
+#pragma mark - Private
+
 
 @end

@@ -10,7 +10,7 @@
 
 @implementation Constants
 
-//Numbers
+// Numbers
 NSInteger const kThreadLimit = 50;
 NSInteger const kPageLimit = 400;
 NSInteger const kDefaultConcurrentLimit = 50;
@@ -32,6 +32,7 @@ NSString *const kProgressViewControllerIdentifier = @"ProgressViewControllerIden
 
 NSString *const kSearchCellIdentifier = @"SearchCellIdentifier";
 NSString *const kProgressCellIdentifier = @"ProgressCellIdentifier";
+NSString *const kProgressViewCellIdentifier = @"ProgressViewCellIdentifier";
 
 // Alerts
 NSString *const kAlertOkButton = @"Ok";
@@ -57,6 +58,8 @@ NSString *const kZeroThreadsAlertMessage = @"Thread number can not be equal to z
 NSString *const kTooManyPagesAlertMessage = @"Page number is too big, maximum available is 400";
 NSString *const kZeroPagesAlertMessage = @"Page number can not be equal to zero";
 
+NSString *const kSuccessSearchObjectMessage = @"This URL contents has %d matches of entered text";
+
 
 // View State
 NSString *const kViewStateIdle = @"Idle";
@@ -64,6 +67,12 @@ NSString *const kViewStateLoading = @"Loading";
 NSString *const kViewStatePaused = @"Paused";
 
 
-
+// Search Object State
+NSString *const kSearchObjectStatusPendingDescription = @"Pending";
+NSString *const kSearchObjectStatusLoadingDescription = @"Loading";
+NSString *const kSearchObjectStatusSuccessDescription = @"Success";
+NSString *const kSearchObjectStatusNetworkErrorDescription = @"Network Error";
+NSString *const kSearchObjectStatusSuspendedDescription = @"Suspended";
+NSString *const kSearchObjectStatusCancelledDescription = @"Cancelled";
 
 @end

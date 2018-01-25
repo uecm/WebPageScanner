@@ -20,13 +20,13 @@ typedef NS_ENUM(NSInteger, SearchObjectStatus) {
 
 @interface SearchObject : NSObject
 
-@property (assign, nonatomic) NSInteger depthLevel;
-
 @property (strong, nonatomic, readonly) NSURL *URL;
 @property (assign, nonatomic) NSInteger textMatches;
 
 @property (assign, nonatomic) SearchObjectStatus status;
 @property (strong, nonatomic) NSString *statusDescription;
+
+@property (strong, nonatomic) NSString *info;
 
 - (instancetype)initWithURL:(NSURL *)URL;
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;

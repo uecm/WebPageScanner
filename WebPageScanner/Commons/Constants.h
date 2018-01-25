@@ -31,6 +31,7 @@ extern NSString *const kProgressViewControllerIdentifier;
 
 extern NSString *const kSearchCellIdentifier;
 extern NSString *const kProgressCellIdentifier;
+extern NSString *const kProgressViewCellIdentifier;
 
 /// Alerts
 extern NSString *const kAlertOkButton;
@@ -55,12 +56,21 @@ extern NSString *const kZeroThreadsAlertMessage;
 extern NSString *const kTooManyPagesAlertMessage;
 extern NSString *const kZeroPagesAlertMessage;
 
+extern NSString *const kSuccessSearchObjectMessage;
 
 // View State
 extern NSString *const kViewStateIdle;
 extern NSString *const kViewStateLoading;
 extern NSString *const kViewStatePaused;
 
+
+// Search Object State
+extern NSString *const kSearchObjectStatusPendingDescription;
+extern NSString *const kSearchObjectStatusLoadingDescription;
+extern NSString *const kSearchObjectStatusSuccessDescription;
+extern NSString *const kSearchObjectStatusNetworkErrorDescription;
+extern NSString *const kSearchObjectStatusSuspendedDescription;
+extern NSString *const kSearchObjectStatusCancelledDescription;
 
 
 @end

@@ -10,7 +10,7 @@
 #import "ButtonsTableViewCell.h"
 #import "SearchEventHandler.h"
 #import "SearchViewConfiguration.h"
-
+#import "Constants.h"
 
 @interface SearchViewController ()
 
@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *textMatchesCell;
 
 @property (weak, nonatomic) IBOutlet ButtonsTableViewCell *buttonsCell;
+@property (weak, nonatomic) IBOutlet UIProgressView *searchProgressView;
 
 @end
 
@@ -38,6 +39,14 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell.reuseIdentifier isEqualToString:kProgressCellIdentifier]) {
+        [self.eventHandler openProgressScreen];
+    }
 }
 
 
@@ -58,8 +67,15 @@
     
     self.textMatchesCell.detailTextLabel.text = [NSString stringWithFormat:@"%d",
                                                  (int)configuration.textMatches];
+    
+    CGFloat progress = (CGFloat)configuration.loadedPagesNumber /
+                        (CGFloat)configuration.maxPagesNumber;
+    [self.searchProgressView setProgress:progress animated:true];
 }
 
+- (void)showViewController:(__kindof UIViewController *)controller {
+    [self.navigationController showViewController:controller sender:self];
+}
 
 
 #pragma mark - Buttons handling

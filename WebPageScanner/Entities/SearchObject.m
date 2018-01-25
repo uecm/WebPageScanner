@@ -7,6 +7,7 @@
 //
 
 #import "SearchObject.h"
+#import "Constants.h"
 
 @interface SearchObject()
 
@@ -32,6 +33,32 @@
 
 -(NSURL *)URL {
     return self.privateURL;
+}
+
+- (NSString *)statusDescription {
+    switch (self.status) {
+        case SearchObjectStatusLoading:
+            return kSearchObjectStatusLoadingDescription;
+            break;
+        case SearchObjectStatusPending:
+            return kSearchObjectStatusPendingDescription;
+            break;
+        case SearchObjectStatusSuccess:
+            return kSearchObjectStatusSuccessDescription;
+            break;
+        case SearchObjectStatusCancelled:
+            return kSearchObjectStatusCancelledDescription;
+            break;
+        case SearchObjectStatusSuspended:
+            return kSearchObjectStatusSuspendedDescription;
+            break;
+        case SearchObjectStatusNetworkError:
+            return kSearchObjectStatusNetworkErrorDescription;
+            break;
+        default:
+            break;
+    }
+    return [NSString string];
 }
 
 @end

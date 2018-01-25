@@ -49,6 +49,8 @@
 #pragma mark - Table view data source
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:false];
+    
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[TextFieldTableViewCell class]]) {
         [((TextFieldTableViewCell *)cell) becomeFirstResponder];

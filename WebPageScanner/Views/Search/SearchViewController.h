@@ -16,6 +16,7 @@
 @required
 
 - (void)updateWithViewConfiguration:(SearchViewConfiguration *)configuration;
+- (void)showViewController:(__kindof UIViewController *)controller;
 
 @end
 

@@ -78,6 +78,7 @@
     URLLoader *loader = [self.serviceFactory initializeURLLoaderWithConcurrentLimit:configuration.threadNumber];
     eventHandler.searchService = [self.serviceFactory initializeSearchServiceWithURLLoader:loader];
     eventHandler.view = searchController;
+    eventHandler.flowController = self;
     
     searchController.eventHandler = eventHandler;
     return searchController;
@@ -85,7 +86,7 @@
 
 - (ProgressViewController *)initializeProgressViewControllerWithSearchService:(SearchService *)searchService {
 
-    ProgressViewController *viewController = [[ProgressViewController alloc] init];
+    ProgressViewController *viewController = [[UIStoryboard storyboardWithName:kMainStoryboardName bundle:nil] instantiateViewControllerWithIdentifier:kProgressViewControllerIdentifier];
     ProgressEventHandler *eventHandler = [[ProgressEventHandler alloc] init];
 
     eventHandler.view = viewController;

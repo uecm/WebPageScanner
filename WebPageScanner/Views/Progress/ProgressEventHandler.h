@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 @class SearchService;
+@class SearchObject;
 @protocol ProgressViewControllerViewing;
 
 @protocol ProgressViewEventHandling <NSObject>
 
+- (NSArray<SearchObject *> *)dataSource;
+
 - (void)configureView;
+- (void)showDetailForItemAtIndex:(NSInteger)index;
 
 @end
 

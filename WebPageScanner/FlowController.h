@@ -10,6 +10,8 @@
 @class MainViewController;
 @class SearchViewController;
 @class SearchConfiguration;
+@class ProgressViewController;
+@class SearchService;
 
 
 @interface FlowController : NSObject
@@ -19,5 +21,6 @@
 
 - (MainViewController *)initializeMainViewController;
 - (SearchViewController *)initializeSearchViewControllerWithConfiguration:(SearchConfiguration *)configuration;
+- (ProgressViewController *)initializeProgressViewControllerWithSearchService:(SearchService *)searchService;
 
 @end

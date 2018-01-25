@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "SearchService.h"
 #import "SearchObject.h"
+#import "FlowController.h"
 
 typedef NS_ENUM(NSInteger, SearchViewState) {
     SearchViewStateLoading,
@@ -80,6 +81,10 @@ typedef NS_ENUM(NSInteger, SearchViewState) {
     [self.searchService stopSearch];
 }
 
+- (void)openProgressScreen {
+    ProgressViewController *progressViewController = [self.flowController initializeProgressViewControllerWithSearchService:self.searchService];
+    [self.view showViewController:(UIViewController *)progressViewController];
+}
 
 #pragma mark - Search Service Delegate
 
@@ -101,8 +106,10 @@ typedef NS_ENUM(NSInteger, SearchViewState) {
 }
 
 - (void)searchService:(SearchService *)service didUpdateNumberOfMatches:(NSInteger)matches {
-    self.viewConfiguration.textMatches += matches;
-    [self.view updateWithViewConfiguration:self.viewConfiguration];
+    if (self.viewState == SearchViewStateLoading) {
+        self.viewConfiguration.textMatches += matches;
+        [self.view updateWithViewConfiguration:self.viewConfiguration];
+    }
 }
 
 - (void)searchServiceDidForceStopSearching:(SearchService *)service {
