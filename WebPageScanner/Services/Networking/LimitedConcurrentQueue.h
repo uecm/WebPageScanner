@@ -19,5 +19,6 @@ typedef void(^TaskBlock)(TaskCompletionBlock completionBlock);
 - (void)enqueueTask:(TaskBlock)task;
 - (void)suspend;
 - (void)resume;
+- (void)invalidateQueues;
 
 @end

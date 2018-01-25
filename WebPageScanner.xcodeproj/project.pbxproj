@@ -23,6 +23,8 @@
 		3712A52D2018BE570015A94D /* FlowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A52C2018BE570015A94D /* FlowController.m */; };
 		3712A5312018EAE20015A94D /* MainEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A5302018EAE20015A94D /* MainEventHandler.m */; };
 		3712A535201901440015A94D /* TextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A534201901440015A94D /* TextFieldTableViewCell.m */; };
+		3712A539201A4C2E0015A94D /* ProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A538201A4C2E0015A94D /* ProgressViewController.m */; };
+		3712A53C201A4C440015A94D /* ProgressEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A53B201A4C440015A94D /* ProgressEventHandler.m */; };
 		74E826A12017CA9E008AF62B /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A02017CA9E008AF62B /* SearchResult.m */; };
 		74E826A52017CCCF008AF62B /* ServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A42017CCCF008AF62B /* ServiceFactory.m */; };
 		74E826A92017DAF8008AF62B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A82017DAF8008AF62B /* Constants.m */; };
@@ -65,6 +67,10 @@
 		3712A5302018EAE20015A94D /* MainEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainEventHandler.m; sourceTree = "<group>"; };
 		3712A533201901440015A94D /* TextFieldTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextFieldTableViewCell.h; sourceTree = "<group>"; };
 		3712A534201901440015A94D /* TextFieldTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextFieldTableViewCell.m; sourceTree = "<group>"; };
+		3712A537201A4C2E0015A94D /* ProgressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressViewController.h; sourceTree = "<group>"; };
+		3712A538201A4C2E0015A94D /* ProgressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressViewController.m; sourceTree = "<group>"; };
+		3712A53A201A4C440015A94D /* ProgressEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressEventHandler.h; sourceTree = "<group>"; };
+		3712A53B201A4C440015A94D /* ProgressEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressEventHandler.m; sourceTree = "<group>"; };
 		74E8269F2017CA9E008AF62B /* SearchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		74E826A02017CA9E008AF62B /* SearchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 		74E826A32017CCCF008AF62B /* ServiceFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceFactory.h; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 			children = (
 				3712A52E2018EAD20015A94D /* Main */,
 				74E826AC2019192E008AF62B /* Search */,
+				3712A536201A47BF0015A94D /* Progress */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,6 +195,17 @@
 				3712A534201901440015A94D /* TextFieldTableViewCell.m */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		3712A536201A47BF0015A94D /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				3712A537201A4C2E0015A94D /* ProgressViewController.h */,
+				3712A538201A4C2E0015A94D /* ProgressViewController.m */,
+				3712A53A201A4C440015A94D /* ProgressEventHandler.h */,
+				3712A53B201A4C440015A94D /* ProgressEventHandler.m */,
+			);
+			path = Progress;
 			sourceTree = "<group>";
 		};
 		74E8269E2017C950008AF62B /* Services */ = {
@@ -330,6 +348,8 @@
 				74E826A52017CCCF008AF62B /* ServiceFactory.m in Sources */,
 				3712A5012017706D0015A94D /* MainViewController.m in Sources */,
 				3712A52A20188A3A0015A94D /* LimitedConcurrentQueue.m in Sources */,
+				3712A539201A4C2E0015A94D /* ProgressViewController.m in Sources */,
+				3712A53C201A4C440015A94D /* ProgressEventHandler.m in Sources */,
 				3712A50C2017706D0015A94D /* main.m in Sources */,
 				74E826AF2019194E008AF62B /* SearchViewController.m in Sources */,
 				74E826BF2019613B008AF62B /* SearchViewConfiguration.m in Sources */,

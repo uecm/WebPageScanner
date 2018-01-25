@@ -10,6 +10,8 @@
 #import "URLSession.h"
 #import "URLResponse.h"
 #import "LimitedConcurrentQueue.h"
+#import "Constants.h"
+
 
 @interface URLLoader()
 
@@ -25,11 +27,10 @@
 {
     self = [super init];
     if (self) {
-        self.maximumConcurrentDownloads = 1000; // Default value if not set
+        self.maximumConcurrentDownloads = kDefaultConcurrentLimit; // Default value if not set
     }
     return self;
 }
-
 
 - (URLSession *)session {
     if (_session == nil) {
@@ -47,20 +48,25 @@
 
 
 - (void)loadURL:(NSURL *)URL withCompletion:(void (^)(URLResponse *, NSError *))completion {
-    
-    TaskBlock task = ^(TaskCompletionBlock loaderCompletion) {
+    if (!_session) {
+        _session = self.session;
+    }
+    [self.requestQueue enqueueTask: ^(TaskCompletionBlock loaderCompletion) {
         [[self.session dataTaskWithURL:URL
                      completionHandler:^(NSData * _Nullable data,
                                          NSURLResponse * _Nullable response,
                                          NSError * _Nullable error) {
+                         if (!_session) {
+                             return;
+                         }
                          loaderCompletion(true);
                          URLResponse *urlResponse = [self URLResponseWithResponse:response
                                                                              data:data
                                                                             error:error];
                          completion(urlResponse, error);
-                     }] resume];
-    };
-    [self.requestQueue enqueueTask:task];
+                     }]
+         resume];
+    }];
 }
 
 - (void)pauseLoading {
@@ -72,11 +78,24 @@
     }];
 }
 
+- (void)resumeLoading {
+    [self.requestQueue resume];
+    [self.session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
+        for (NSURLSessionTask *task in tasks) {
+            [task resume];
+        }
+    }];
+}
+
 - (void)stopLoading {
-    [self.requestQueue suspend];
-    self.requestQueue = nil;
-    [self.session invalidateAndCancel];
-    self.session = nil;
+    if (_requestQueue) {
+        [self.requestQueue invalidateQueues];
+        _requestQueue = nil;
+    }
+    if (_session) {
+        [self.session invalidateAndCancel];
+        _session = nil;
+    }
 }
 
 

@@ -18,6 +18,10 @@
 #import "SearchEventHandler.h"
 #import "SearchConfiguration.h"
 
+#import "ProgressViewController.h"
+#import "ProgressEventHandler.h"
+
+
 @interface FlowController()
 
 @property (strong, nonatomic) ServiceFactory *serviceFactory;
@@ -35,7 +39,7 @@
 }
 
 - (UIStoryboard *)mainStoryboard {
-    return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    return [UIStoryboard storyboardWithName:kMainStoryboardName bundle:nil];
 }
 
 - (UINavigationController *)initializeRootNavigationController {
@@ -55,7 +59,7 @@
 // View Wireframes
 
 - (MainViewController *)initializeMainViewController {
-    MainViewController *controller = (MainViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:kMainViewControllerIdentifier];
+    MainViewController *controller = (MainViewController *)[[UIStoryboard storyboardWithName:kMainStoryboardName bundle:nil] instantiateViewControllerWithIdentifier:kMainViewControllerIdentifier];
     MainEventHandler *eventHandler = [[MainEventHandler alloc] init];
 
     Parser *parser = [self.serviceFactory initializeParser];
@@ -79,5 +83,17 @@
     return searchController;
 }
 
+- (ProgressViewController *)initializeProgressViewControllerWithSearchService:(SearchService *)searchService {
+
+    ProgressViewController *viewController = [[ProgressViewController alloc] init];
+    ProgressEventHandler *eventHandler = [[ProgressEventHandler alloc] init];
+
+    eventHandler.view = viewController;
+    eventHandler.searchService = searchService;
+
+    viewController.eventHandler = eventHandler;
+
+    return viewController;
+}
 
 @end

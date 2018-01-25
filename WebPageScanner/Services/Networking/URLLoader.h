@@ -17,6 +17,7 @@
     withCompletion:(void (^)(URLResponse *response, NSError *error))completion;
 
 - (void)pauseLoading;
+- (void)resumeLoading;
 - (void)stopLoading;
 
 @end

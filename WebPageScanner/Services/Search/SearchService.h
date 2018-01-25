@@ -27,17 +27,7 @@
 - (void)searchService:(SearchService *)service
     didUpdateNumberOfMatches:(NSInteger)matches;
 
-
-
-/**
- Called after service stopped searching by user action
-
- @param service - Search service
- */
-- (void)searchServiceDidStopSearching:(SearchService *)service;
-
-@optional
-- (void)searchServiceDidFailSearch:(SearchService *)service;
+- (void)searchServiceDidForceStopSearching:(SearchService *)service;
 
 @end
 
@@ -45,14 +35,18 @@
 @interface SearchService : NSObject
 
 @property (assign, nonatomic) NSInteger maximumURLCount;
-@property (strong, nonatomic) id<SearchServiceDelegate> delegate;
 
+- (void)addDelegate:(id<SearchServiceDelegate>)delegate;
+- (void)removeDelegate:(id<SearchServiceDelegate>)delegate;
 
-- (instancetype)initWithLoader:(URLLoader *)loader parser:(Parser *)parser;
+- (instancetype)initWithLoader:(URLLoader *)loader parser:(Parser *)parser NS_DESIGNATED_INITIALIZER;
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 - (void)searchText:(NSString *)text startingFromURL:(NSURL *)URL;
 - (void)pauseSearch;
+- (void)resumeSearch;
 - (void)stopSearch;
 
+- (NSArray<SearchObject *> *)usedSearchObjects;
 
 @end

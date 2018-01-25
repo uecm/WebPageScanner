@@ -16,7 +16,6 @@
 - (URLLoader *) initializeURLLoader;
 - (URLLoader *) initializeURLLoaderWithConcurrentLimit:(NSInteger)limit;
 
-- (SearchService *) initializeSearchService;
 - (SearchService *) initializeSearchServiceWithURLLoader:(URLLoader *)loader;
 
 - (Parser *) initializeParser;

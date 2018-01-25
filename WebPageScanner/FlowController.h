@@ -14,8 +14,10 @@
 
 @interface FlowController : NSObject
 
+
+- (__kindof UIViewController *)initializeAppEntryPoint;
+
 - (MainViewController *)initializeMainViewController;
 - (SearchViewController *)initializeSearchViewControllerWithConfiguration:(SearchConfiguration *)configuration;
-- (__kindof UIViewController *)initializeAppEntryPoint;
 
 @end

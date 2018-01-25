@@ -193,7 +193,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tiP-ty-Z6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-556" y="-396"/>
+            <point key="canvasLocation" x="-383" y="-396"/>
         </scene>
         <!--Search-->
         <scene sceneID="CBv-1E-bHJ">
@@ -453,12 +453,57 @@
                         <outlet property="statusCell" destination="fCC-ZG-agP" id="3uO-Bf-nqI"/>
                         <outlet property="textMatchesCell" destination="P1j-MW-hNY" id="4vo-3H-Lt8"/>
                         <outlet property="threadLimitCell" destination="wN1-D3-Rw8" id="ZZc-tV-v61"/>
+                        <segue destination="eai-ZC-Hov" kind="show" id="ev4-qt-f6Y"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y7Q-A6-qhy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="wza-Tu-mfM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="148" y="-395"/>
+            <point key="canvasLocation" x="434" y="-396"/>
+        </scene>
+        <!--Progress-->
+        <scene sceneID="ov9-UC-enT">
+            <objects>
+                <tableViewController storyboardIdentifier="ProgressViewControllerIdentifier" title="Progress" id="eai-ZC-Hov" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="IU5-SH-ljY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProgressCellIdentifier" textLabel="y0I-Gr-EWr" detailTextLabel="YJ2-UJ-YYo" style="IBUITableViewCellStyleSubtitle" id="NEY-iI-8lT">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NEY-iI-8lT" id="0Kc-fN-QS0">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y0I-Gr-EWr">
+                                            <rect key="frame" x="16" y="5" width="31.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YJ2-UJ-YYo">
+                                            <rect key="frame" x="16" y="25.5" width="36.5" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="eai-ZC-Hov" id="7pO-HM-CB6"/>
+                            <outlet property="delegate" destination="eai-ZC-Hov" id="Ib4-BW-BFY"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qRb-GF-TCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1319" y="-396"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Sl6-XN-0gp">

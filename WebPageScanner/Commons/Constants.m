@@ -13,19 +13,25 @@
 //Numbers
 NSInteger const kThreadLimit = 50;
 NSInteger const kPageLimit = 400;
+NSInteger const kDefaultConcurrentLimit = 50;
+
 
 // Predicates
 NSString *const kURLPredicate = @"https?://(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)";
 NSString *const kURLAbsoluteStringMatchPredicate = @"SELF.absoluteString == %@";
 
 
-
 // Storyboard Identifiers
+NSString *const kMainStoryboardName = @"Main";
+
 NSString *const kRootNavigationControllerIdentifier = @"RootNavigationController";
 NSString *const kMainViewControllerIdentifier = @"ViewControllerIdentifier";
 NSString *const kSearchViewControllerIdentifier = @"SearchViewControllerIdentifier";
+NSString *const kProgressViewControllerIdentifier = @"ProgressViewControllerIdentifier";
+
 
 NSString *const kSearchCellIdentifier = @"SearchCellIdentifier";
+NSString *const kProgressCellIdentifier = @"ProgressCellIdentifier";
 
 // Alerts
 NSString *const kAlertOkButton = @"Ok";

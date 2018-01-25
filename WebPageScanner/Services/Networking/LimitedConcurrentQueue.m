@@ -10,9 +10,8 @@
 
 @interface LimitedConcurrentQueue()
 
-@property (strong, nonatomic) dispatch_queue_t concurrentQueue;
-@property (strong, nonatomic) dispatch_queue_t serialQueue;
-@property (strong, nonatomic) dispatch_semaphore_t semaphore;
+@property (strong, atomic) dispatch_semaphore_t semaphore;
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
 
 @end
 
@@ -21,9 +20,9 @@
 - (instancetype)initWithLimit:(NSInteger)limit {
     self = [super init];
     if (self) {
-        self.concurrentQueue = dispatch_queue_create("com.egor.Test-Task.WebConcurrent", nil);
-        self.serialQueue = dispatch_queue_create("com.egor.Test-Task.WebSerial", DISPATCH_QUEUE_SERIAL);
         self.semaphore = dispatch_semaphore_create(limit);
+        self.operationQueue = [[NSOperationQueue alloc] init];
+        self.operationQueue.maxConcurrentOperationCount = limit;
     }
     return self;
 }
@@ -33,24 +32,34 @@
     if (!task) {
         NSAssert(!task, @"Provided task is nil");
     }
-    dispatch_async(self.serialQueue, ^{
+    [self.operationQueue addOperationWithBlock:^{
         dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-        dispatch_async(self.concurrentQueue, ^{
-            task(^(BOOL completed) {
-                dispatch_semaphore_signal(self.semaphore);
-            });
+        task(^(BOOL completed) {
+            dispatch_semaphore_signal(self.semaphore);
         });
+    }];
+}
+
+
+- (void)invalidateQueues {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+        [self.operationQueue cancelAllOperations];
     });
 }
 
 - (void)suspend {
-    dispatch_suspend(self.concurrentQueue);
-    dispatch_suspend(self.serialQueue);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self.operationQueue setSuspended:true];
+        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    });
 }
 
 - (void)resume {
-    dispatch_resume(self.concurrentQueue);
-    dispatch_resume(self.serialQueue);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self.operationQueue setSuspended:false];
+        dispatch_semaphore_signal(self.semaphore);
+    });
 }
 
 

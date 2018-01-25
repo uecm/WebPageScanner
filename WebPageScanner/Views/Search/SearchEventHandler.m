@@ -43,30 +43,40 @@ typedef NS_ENUM(NSInteger, SearchViewState) {
 #pragma mark - SearchViewControllerEventHandling
 
 - (void)configureView {
-    
     self.viewConfiguration.viewState = [self descriptionForViewState];
-    
-    
     [self.view updateWithViewConfiguration:self.viewConfiguration];
 }
 
 
 - (void)startSearching {
-    self.searchService.delegate = self;
+
+    if (self.viewState == SearchViewStatePaused) { // Resume
+        [self.searchService resumeSearch];
+        self.viewState = SearchViewStateLoading;
+        [self configureView];
+        return;
+    }
+
+    // Initial search
+    [self.searchService addDelegate:self];
     self.searchService.maximumURLCount = self.viewConfiguration.maxPagesNumber;
     [self.searchService searchText:self.viewConfiguration.searchText
                    startingFromURL:self.viewConfiguration.startURL];
     
     self.viewState = SearchViewStateLoading;
-    self.viewConfiguration.viewState = [self descriptionForViewState];
-    [self.view updateWithViewConfiguration:self.viewConfiguration];
+    [self configureView];
 }
 
 - (void)pauseSearching {
+    self.viewState = SearchViewStatePaused;
+    [self configureView];
+
     [self.searchService pauseSearch];
 }
 
 - (void)stopSearching {
+    self.viewState = SearchViewStateIdle;
+    [self configureView];
     [self.searchService stopSearch];
 }
 
@@ -75,11 +85,14 @@ typedef NS_ENUM(NSInteger, SearchViewState) {
 
 - (void)searchService:(SearchService *)service didFinishSearchingWithResult:(SearchResult *)result {
     self.viewState = SearchViewStateIdle;
-    self.viewConfiguration.viewState = [self descriptionForViewState];
-    [self.view updateWithViewConfiguration:self.viewConfiguration];
+    [self configureView];
 }
 
 - (void)searchService:(SearchService *)service didUpdateStatusOfSearchObject:(SearchObject *)object {
+    if (self.viewState == SearchViewStatePaused || self.viewState == SearchViewStateIdle) {
+        return;
+    }
+
     if (object.status == SearchObjectStatusSuccess ||
         object.status == SearchObjectStatusNetworkError) {
         self.viewConfiguration.loadedPagesNumber += 1;
@@ -92,15 +105,11 @@ typedef NS_ENUM(NSInteger, SearchViewState) {
     [self.view updateWithViewConfiguration:self.viewConfiguration];
 }
 
-- (void)searchServiceDidStopSearching:(SearchService *)service {
+- (void)searchServiceDidForceStopSearching:(SearchService *)service {
     self.viewConfiguration.loadedPagesNumber = 0;
     self.viewConfiguration.textMatches = 0;
+    [self configureView];
 }
-
-- (void)searchServiceDidFailSearch:(SearchService *)service {
-    
-}
-
 
 
 #pragma mark - Private

@@ -26,9 +26,6 @@
 
 
 #pragma mark Search Service
-- (SearchService *) initializeSearchService {
-    return [[SearchService alloc] init];
-}
 
 - (SearchService *)initializeSearchServiceWithURLLoader:(URLLoader *)loader {
     Parser *parser = [self initializeParser];

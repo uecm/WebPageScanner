@@ -13,7 +13,7 @@
 //Numbers
 extern NSInteger const kThreadLimit;
 extern NSInteger const kPageLimit;
-
+extern NSInteger const kDefaultConcurrentLimit;
 
 // Predicates
 extern NSString *const kURLPredicate;
@@ -21,11 +21,16 @@ extern NSString *const kURLAbsoluteStringMatchPredicate;
 
 
 // Storyboard Identifiers
+extern NSString *const kMainStoryboardName;
+
 extern NSString *const kRootNavigationControllerIdentifier;
 extern NSString *const kMainViewControllerIdentifier;
 extern NSString *const kSearchViewControllerIdentifier;
+extern NSString *const kProgressViewControllerIdentifier;
+
 
 extern NSString *const kSearchCellIdentifier;
+extern NSString *const kProgressCellIdentifier;
 
 /// Alerts
 extern NSString *const kAlertOkButton;
