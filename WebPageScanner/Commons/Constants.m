@@ -19,6 +19,8 @@ NSInteger const kDefaultConcurrentLimit = 50;
 // Predicates
 NSString *const kURLPredicate = @"https?://(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)";
 NSString *const kURLAbsoluteStringMatchPredicate = @"SELF.absoluteString == %@";
+NSString *const kURLHTTPPrefix = @"http://";
+NSString *const kURLHTTPSPrefix = @"https://";
 
 
 // Storyboard Identifiers

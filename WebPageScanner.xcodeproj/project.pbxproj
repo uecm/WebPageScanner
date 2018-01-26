@@ -504,6 +504,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DD484H6UF4;
 				INFOPLIST_FILE = WebPageScanner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egor.Test-Task.iOS.WebPageScanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -520,6 +521,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DD484H6UF4;
 				INFOPLIST_FILE = WebPageScanner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egor.Test-Task.iOS.WebPageScanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";

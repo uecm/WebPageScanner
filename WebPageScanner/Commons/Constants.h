@@ -18,7 +18,8 @@ extern NSInteger const kDefaultConcurrentLimit;
 // Predicates
 extern NSString *const kURLPredicate;
 extern NSString *const kURLAbsoluteStringMatchPredicate;
-
+extern NSString *const kURLHTTPPrefix;
+extern NSString *const kURLHTTPSPrefix;
 
 // Storyboard Identifiers
 extern NSString *const kMainStoryboardName;

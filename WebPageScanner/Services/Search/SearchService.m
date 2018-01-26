@@ -67,7 +67,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
     [delegates removeObject:delegate];
 }
 
-
 - (NSArray<SearchObject *> *)usedSearchObjects {
     return [self.usedObjects copy];
 }
@@ -139,9 +138,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
     }
 }
 
-
-
-
 #pragma mark Private
 
 - (void)loadCurrentQueueObjects {
@@ -155,10 +151,10 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
                 [self.loader stopLoading];
                 for (id delegate in delegates) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [delegate searchService:self didFinishSearchingWithResult:self.searchResult];
+                        [delegate searchService:self
+                   didFinishSearchingWithResult:self.searchResult];
                     });
                 }
-                
                 break;
             default:
                 break;
@@ -173,7 +169,8 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
     if (self.queue.count == 0) {
         for (id delegate in delegates) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [delegate searchService:self didFinishSearchingWithResult:self.searchResult];
+                [delegate searchService:self
+           didFinishSearchingWithResult:self.searchResult];
             });
         }
         return;
@@ -244,14 +241,11 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 }
 
 
-
-
 #pragma mark - Search Actions
 
 - (void)handleResponseHTML:(NSString *)htmlString
             withSearchText:(NSString *)text
            forSearchObject:(SearchObject *)searchObject {
-    
     if (!htmlString) {
         return;
     }
@@ -265,10 +259,7 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
             [delegate searchService:self didUpdateNumberOfMatches:numberOfMatches];
         });
     }
-    
-    
     self.searchResult.totalTextMatches += numberOfMatches;
-    
     NSArray<SearchObject *> *searchObjects = [self searchObjectsForLinks:links
                                                               withParent:searchObject];
     [self.nextLevelQueue addObjectsFromArray:searchObjects];
@@ -293,8 +284,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
     }
     return [searchObjects copy];
 }
-
-
 
 
 @end

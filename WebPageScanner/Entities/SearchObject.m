@@ -18,14 +18,15 @@
 
 @implementation SearchObject
 
-
 - (instancetype)initWithURL:(NSURL *)URL {
     self = [super init];
     if (self) {
-        if ([URL.absoluteString hasPrefix:@"http://"] || [URL.absoluteString hasPrefix:@"https://"]) {
+        if ([URL.absoluteString hasPrefix:kURLHTTPPrefix] ||
+            [URL.absoluteString hasPrefix:kURLHTTPSPrefix]) {
             self.privateURL = URL;
         } else {
-            self.privateURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", URL.absoluteString]];
+            self.privateURL = [NSURL URLWithString:[NSString stringWithFormat:kURLHTTPPrefix,
+                                                    URL.absoluteString]];
         }
     }
     return self;
