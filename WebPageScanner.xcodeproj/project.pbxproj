@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3712A4FE2017706D0015A94D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A4FD2017706D0015A94D /* AppDelegate.m */; };
 		3712A5012017706D0015A94D /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A5002017706D0015A94D /* MainViewController.m */; };
-		3712A5042017706D0015A94D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3712A5022017706D0015A94D /* Main.storyboard */; };
 		3712A5062017706D0015A94D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3712A5052017706D0015A94D /* Assets.xcassets */; };
 		3712A5092017706D0015A94D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3712A5072017706D0015A94D /* LaunchScreen.storyboard */; };
 		3712A50C2017706D0015A94D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A50B2017706D0015A94D /* main.m */; };
@@ -25,6 +24,7 @@
 		3712A535201901440015A94D /* TextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A534201901440015A94D /* TextFieldTableViewCell.m */; };
 		3712A539201A4C2E0015A94D /* ProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A538201A4C2E0015A94D /* ProgressViewController.m */; };
 		3712A53C201A4C440015A94D /* ProgressEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3712A53B201A4C440015A94D /* ProgressEventHandler.m */; };
+		3712A540201B35D30015A94D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3712A53F201B35D30015A94D /* Main.storyboard */; };
 		74E826A12017CA9E008AF62B /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A02017CA9E008AF62B /* SearchResult.m */; };
 		74E826A52017CCCF008AF62B /* ServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A42017CCCF008AF62B /* ServiceFactory.m */; };
 		74E826A92017DAF8008AF62B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E826A82017DAF8008AF62B /* Constants.m */; };
@@ -42,7 +42,6 @@
 		3712A4FD2017706D0015A94D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3712A4FF2017706D0015A94D /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		3712A5002017706D0015A94D /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		3712A5032017706D0015A94D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3712A5052017706D0015A94D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3712A5082017706D0015A94D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3712A50A2017706D0015A94D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,6 +70,7 @@
 		3712A538201A4C2E0015A94D /* ProgressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressViewController.m; sourceTree = "<group>"; };
 		3712A53A201A4C440015A94D /* ProgressEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressEventHandler.h; sourceTree = "<group>"; };
 		3712A53B201A4C440015A94D /* ProgressEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressEventHandler.m; sourceTree = "<group>"; };
+		3712A53F201B35D30015A94D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		74E8269F2017CA9E008AF62B /* SearchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		74E826A02017CA9E008AF62B /* SearchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 		74E826A32017CCCF008AF62B /* ServiceFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceFactory.h; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 				74E8269E2017C950008AF62B /* Services */,
 				74E826AA2017DB03008AF62B /* Commons */,
 				3712A5052017706D0015A94D /* Assets.xcassets */,
-				3712A5022017706D0015A94D /* Main.storyboard */,
+				3712A53F201B35D30015A94D /* Main.storyboard */,
 				3712A5072017706D0015A94D /* LaunchScreen.storyboard */,
 				3712A50A2017706D0015A94D /* Info.plist */,
 				3712A50B2017706D0015A94D /* main.m */,
@@ -330,9 +330,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3712A540201B35D30015A94D /* Main.storyboard in Resources */,
 				3712A5092017706D0015A94D /* LaunchScreen.storyboard in Resources */,
 				3712A5062017706D0015A94D /* Assets.xcassets in Resources */,
-				3712A5042017706D0015A94D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,14 +373,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3712A5022017706D0015A94D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3712A5032017706D0015A94D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3712A5072017706D0015A94D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

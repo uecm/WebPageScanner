@@ -25,8 +25,7 @@
             [URL.absoluteString hasPrefix:kURLHTTPSPrefix]) {
             self.privateURL = URL;
         } else {
-            self.privateURL = [NSURL URLWithString:[NSString stringWithFormat:kURLHTTPPrefix,
-                                                    URL.absoluteString]];
+            self.privateURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kURLHTTPPrefix, URL.absoluteString]];
         }
     }
     return self;

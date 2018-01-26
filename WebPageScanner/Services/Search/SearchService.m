@@ -145,7 +145,11 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
         switch (reason) {
             case SearchServiceFinishReasonFinishedQueue:
                 self.queue = [self.nextLevelQueue copy];
-                [self loadCurrentQueueObjects];
+                if (self.queue.count > 0) {
+                    [self loadCurrentQueueObjects];
+                } else {
+                    [self.loader stopLoading];
+                }
                 break;
             case SearchServiceFinishReasonReachedMaxAmount:
                 [self.loader stopLoading];
