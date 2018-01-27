@@ -47,15 +47,15 @@
             [self.operationQueue cancelAllOperations];
         }
         if (self.semaphore) {
-            dispatch_semaphore_wait(self.semaphore, 0);
+            dispatch_semaphore_signal(self.semaphore);
         }
     });
 }
 
 - (void)suspend {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.operationQueue setSuspended:true];
         dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+        [self.operationQueue setSuspended:true];
     });
 }
 

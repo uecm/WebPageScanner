@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 
 @property (strong, nonatomic) NSArray<SearchObject *> *queue;
 @property (strong, nonatomic) NSMutableArray<SearchObject *> *nextLevelQueue;
-@property (strong, nonatomic) NSMutableArray<SearchObject *> *usedObjects;
+@property (strong, atomic) NSMutableArray<SearchObject *> *usedObjects;
 
 @property (strong, atomic) NSMutableArray<NSURL *> *usedURLs;
 
@@ -39,7 +39,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 
 @implementation SearchService {
     NSHashTable *delegates;
-    BOOL paused;
 }
 
 - (instancetype)initWithLoader:(URLLoader *)loader parser:(Parser *)parser {
@@ -78,7 +77,7 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
     if (!self.loader) {
         return;
     }
-    paused = false;
+
     self.searchResult.text = text;
     self.searchResult.startURL = URL;
     
@@ -89,7 +88,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 }
 
 - (void)pauseSearch {
-    paused = true;
     [self.loader pauseLoading];
     
     for (SearchObject *object in self.queue) {
@@ -104,7 +102,7 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 }
 
 - (void)resumeSearch {
-    paused = false;
+
     [self.loader resumeLoading];
     for (SearchObject *object in self.queue) {
         if (object.status == SearchObjectStatusSuspended) {
@@ -117,7 +115,6 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
 }
 
 - (void)stopSearch {
-    paused = false;
     [self.loader stopLoading];
     self.queue = [NSArray array];
     self.usedURLs = [NSMutableArray array];
@@ -228,13 +225,11 @@ typedef NS_ENUM(NSInteger, SearchServiceFinishReason) {
             }
         }
         
-        if (!paused) {
-            for (id delegate in delegates) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.usedObjects addObject:searchObject];
-                    [delegate searchService:self didUpdateStatusOfSearchObject:searchObject];
-                });
-            }
+        for (id delegate in delegates) {
+            [self.usedObjects addObject:searchObject];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [delegate searchService:self didUpdateStatusOfSearchObject:searchObject];
+            });
         }
         BOOL shouldStop = self.usedURLs.count == self.maximumURLCount;
         completion(shouldStop);

@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, SearchViewState) {
 }
 
 - (void)searchService:(SearchService *)service didUpdateStatusOfSearchObject:(SearchObject *)object {
-    if (self.viewState == SearchViewStatePaused || self.viewState == SearchViewStateIdle) {
+    if (self.viewState == SearchViewStateIdle) {
         return;
     }
 

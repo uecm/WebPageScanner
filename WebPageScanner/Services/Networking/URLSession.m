@@ -7,6 +7,7 @@
 //
 
 #import "URLSession.h"
+#import "Constants.h"
 
 @implementation URLSession
 
@@ -19,7 +20,7 @@
 + (NSURLSessionConfiguration *)configurationWithLimit:(NSInteger)limit {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPMaximumConnectionsPerHost = limit;
-    configuration.timeoutIntervalForRequest = 5;
+    configuration.timeoutIntervalForRequest = kDefaultRequestTimeout;
     return configuration;
 }
 

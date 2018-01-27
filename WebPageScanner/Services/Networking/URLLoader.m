@@ -48,11 +48,12 @@
 
 
 - (void)loadURL:(NSURL *)URL withCompletion:(void (^)(URLResponse *, NSError *))completion {
-    if (!_session) {
-        _session = self.session;
-    }
+    _session = self.session;
     [self.requestQueue enqueueTask: ^(TaskCompletionBlock loaderCompletion) {
-        [[self.session dataTaskWithURL:URL
+        if (!_session) {
+            return;
+        }
+        [[_session dataTaskWithURL:URL
                      completionHandler:^(NSData * _Nullable data,
                                          NSURLResponse * _Nullable response,
                                          NSError * _Nullable error) {
@@ -79,11 +80,11 @@
 }
 
 - (void)resumeLoading {
-    [self.requestQueue resume];
     [self.session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
         for (NSURLSessionTask *task in tasks) {
             [task resume];
         }
+        [self.requestQueue resume];
     }];
 }
 

@@ -14,6 +14,7 @@
 extern NSInteger const kThreadLimit;
 extern NSInteger const kPageLimit;
 extern NSInteger const kDefaultConcurrentLimit;
+extern NSInteger const kDefaultRequestTimeout;
 
 // Predicates
 extern NSString *const kURLPredicate;

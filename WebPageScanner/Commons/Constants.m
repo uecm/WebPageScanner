@@ -14,7 +14,7 @@
 NSInteger const kThreadLimit = 50;
 NSInteger const kPageLimit = 400;
 NSInteger const kDefaultConcurrentLimit = 50;
-
+NSInteger const kDefaultRequestTimeout = 30;
 
 // Predicates
 NSString *const kURLPredicate = @"https?://(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)";
